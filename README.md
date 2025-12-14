@@ -1,6 +1,6 @@
 # Hytale Username Checker 
 
-A simple web tool for checking Hytale username availability in bulk.
+A web tool for generating Hytale usernames with AI and checking availability in bulk.
 
 <a href="https://www.buymeacoffee.com/domab" target="_blank">
 <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 108px !important;" ></a>
