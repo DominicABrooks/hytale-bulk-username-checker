@@ -542,19 +542,32 @@ sephiroth"
                 checked: 0,
                 available: 0,
                 taken: 0,
-                errors: 0
+                errors: 0,
+                invalid: 0
             };
 
             for (let i = 0; i < usernames.length && !shouldStop; i += concurrent) {
                 const batch = usernames.slice(i, i + concurrent);
-                const promises = batch.map(username => checkUsername(username));
+                const promises = batch.map(username => {
+                    // Check if username is valid first
+                    if (!isValidUsername(username)) {
+                        return Promise.resolve({
+                            username,
+                            status: 'invalid'
+                        });
+                    }
+                    return checkUsername(username);
+                });
                 
                 const batchResults = await Promise.all(promises);
                 
                 for (const result of batchResults) {
                     stats.checked++;
                     
-                    if (result.status === 'error') {
+                    if (result.status === 'invalid') {
+                        stats.invalid++;
+                        addResult(result.username, 'errors');
+                    } else if (result.status === 'error') {
                         stats.errors++;
                         addResult(result.username, 'errors');
                     } else if (result.available) {
@@ -574,6 +587,15 @@ sephiroth"
             }
 
             return stats;
+        }
+
+        function isValidUsername(username) {
+            // Must be 3-16 characters
+            if (username.length < 3 || username.length > 16) {
+                return false;
+            }
+            // Must be letters, numbers, or underscore only
+            return /^[a-zA-Z0-9_]+$/.test(username);
         }
 
         async function startCheck() {
