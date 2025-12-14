@@ -1,18 +1,15 @@
-# Hytale Username Checker
+# Hytale Username Checker 
 
 A simple web tool for checking Hytale username availability in bulk.
+
+<a href="https://www.buymeacoffee.com/domab" target="_blank">
+<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 30px !important;width: 108px !important;" ></a>
 
 ## Use Online
 
 **[https://dominicabrooks.github.io/hytale-bulk-username-checker](https://dominicabrooks.github.io/hytale-bulk-username-checker)**
 
 No installation required just visit the link and start checking usernames!
-
----
-
-<a href="https://www.buymeacoffee.com/domab" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
----
 
 ## How to Use
 
