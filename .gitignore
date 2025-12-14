@@ -1,0 +1,7 @@
+node_modules/
+*.json
+!package.json
+available_usernames.txt
+results_*.json
+.env
+.DS_Store

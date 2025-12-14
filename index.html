@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hytale Username Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 60px 20px;
+            background: linear-gradient(rgba(10, 14, 39, 0.85), rgba(10, 14, 39, 0.85)), 
+                        url('https://assetsio.gnwcdn.com/hytale_EoAJFYl.jpg?width=690&quality=85&format=jpg&dpr=3&auto=webp') center/cover no-repeat;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .logo {
+            display: none;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #00d4ff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header p {
+            color: #8b92a8;
+            font-size: 1rem;
+        }
+
+        .github-star {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .github-star a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: #24292e;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .github-star a:hover {
+            background: #2f363d;
+        }
+
+        .github-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .card {
+            background: #1a1f3a;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2f4a;
+        }
+
+        label {
+            display: block;
+            color: #8b92a8;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            background: #0a0e27;
+            border: 1px solid #2a2f4a;
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
+        textarea::placeholder {
+            color: #4a5568;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group label {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        input[type="number"] {
+            width: 70px;
+            padding: 6px 10px;
+            background: #0a0e27;
+            border: 1px solid #2a2f4a;
+            border-radius: 4px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #00d4ff;
+            color: #0a0e27;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #00b8e6;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #2a2f4a;
+            color: #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #3a3f5a;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #0a0e27;
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid #2a2f4a;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #8b92a8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #0a0e27;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #00d4ff;
+            transition: width 0.3s;
+        }
+
+        .result-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #2a2f4a;
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: transparent;
+            border: none;
+            color: #8b92a8;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background: #2a2f4a;
+        }
+
+        .tab.active {
+            background: #00d4ff;
+            color: #0a0e27;
+        }
+
+        .result-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background: #0a0e27;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+
+        .result-item.available {
+            border-left-color: #10b981;
+        }
+
+        .result-item.taken {
+            border-left-color: #ef4444;
+        }
+
+        .result-item.errors {
+            border-left-color: #f59e0b;
+        }
+
+        .username {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        .badge {
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge.available {
+            background: #10b981;
+            color: white;
+        }
+
+        .badge.taken {
+            background: #ef4444;
+            color: white;
+        }
+
+        .badge.errors {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0e27;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #2a2f4a;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a3f5a;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .github-star {
+                position: static;
+                margin-top: 15px;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="github-star">
+                <a href="https://github.com/yourusername/hytale" target="_blank">
+                    <svg class="github-icon" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    Star on GitHub
+                </a>
+            </div>
+            <div class="logo"></div>
+            <h1>Hytale Username Checker</h1>
+            <p>Check username availability in bulk</p>
+        </div>
+
+        <div class="card">
+            <label for="usernames">Enter usernames (one per line)</label>
+            <textarea 
+                id="usernames" 
+                placeholder="mario
+sonic
+link
+cloud
+sephiroth"
+            ></textarea>
+
+            <div class="controls">
+                <button class="btn-primary" id="startBtn" onclick="startCheck()">
+                    Start Checking
+                </button>
+                <button class="btn-secondary hidden" id="stopBtn" onclick="stopCheck()">
+                    Stop
+                </button>
+                <button class="btn-success hidden" id="exportBtn" onclick="exportResults()">
+                    Export Available
+                </button>
+                <div class="control-group">
+                    <label for="delay">Delay (ms)</label>
+                    <input type="number" id="delay" value="200" min="0" max="5000" step="50">
+                </div>
+                <div class="control-group">
+                    <label for="concurrent">Concurrent</label>
+                    <input type="number" id="concurrent" value="5" min="1" max="10">
+                </div>
+            </div>
+
+            <div class="stats hidden" id="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="checkedCount">0</div>
+                    <div class="stat-label">Checked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="availableCount">0</div>
+                    <div class="stat-label">Available</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="takenCount">0</div>
+                    <div class="stat-label">Taken</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="errorCount">0</div>
+                    <div class="stat-label">Errors</div>
+                </div>
+            </div>
+
+            <div class="progress-bar hidden" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="results hidden" id="results">
+                <div class="result-tabs">
+                    <button class="tab active" onclick="switchTab('all')">All</button>
+                    <button class="tab" onclick="switchTab('available')">Available</button>
+                    <button class="tab" onclick="switchTab('taken')">Taken</button>
+                    <button class="tab" onclick="switchTab('errors')">Errors</button>
+                </div>
+                <div class="result-list" id="resultList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://api.hytl.tools/check';
+        let isChecking = false;
+        let shouldStop = false;
+        let results = {
+            all: [],
+            available: [],
+            taken: [],
+            errors: []
+        };
+        let currentTab = 'all';
+
+        function updateStats(stats) {
+            document.getElementById('totalCount').textContent = stats.total;
+            document.getElementById('checkedCount').textContent = stats.checked;
+            document.getElementById('availableCount').textContent = stats.available;
+            document.getElementById('takenCount').textContent = stats.taken;
+            document.getElementById('errorCount').textContent = stats.errors;
+
+            const progress = stats.total > 0 ? (stats.checked / stats.total * 100) : 0;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+
+        function addResult(username, status) {
+            const result = { username, status };
+            results.all.push(result);
+            results[status].push(result);
+
+            if (currentTab === 'all' || currentTab === status) {
+                displayResult(result);
+            }
+        }
+
+        function displayResult(result) {
+            const resultList = document.getElementById('resultList');
+            const item = document.createElement('div');
+            item.className = `result-item ${result.status}`;
+            
+            const usernameSpan = document.createElement('span');
+            usernameSpan.className = 'username';
+            usernameSpan.textContent = result.username;
+            
+            const badge = document.createElement('span');
+            badge.className = `badge ${result.status}`;
+            badge.textContent = result.status;
+            
+            item.appendChild(usernameSpan);
+            item.appendChild(badge);
+            resultList.appendChild(item);
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const resultList = document.getElementById('resultList');
+            resultList.innerHTML = '';
+            
+            const resultsToShow = tab === 'all' ? results.all : results[tab];
+            resultsToShow.forEach(result => displayResult(result));
+        }
+
+        async function checkUsername(username) {
+            try {
+                const response = await fetch(`${API_URL}/${encodeURIComponent(username)}`);
+                
+                if (response.status === 429) {
+                    throw new Error('Rate limited');
+                }
+
+                const data = await response.json();
+                return {
+                    username,
+                    available: data.available || false,
+                    status: 'success'
+                };
+            } catch (error) {
+                return {
+                    username,
+                    available: false,
+                    status: 'error',
+                    error: error.message
+                };
+            }
+        }
+
+        async function processBatch(usernames, delay, concurrent) {
+            const stats = {
+                total: usernames.length,
+                checked: 0,
+                available: 0,
+                taken: 0,
+                errors: 0
+            };
+
+            for (let i = 0; i < usernames.length && !shouldStop; i += concurrent) {
+                const batch = usernames.slice(i, i + concurrent);
+                const promises = batch.map(username => checkUsername(username));
+                
+                const batchResults = await Promise.all(promises);
+                
+                for (const result of batchResults) {
+                    stats.checked++;
+                    
+                    if (result.status === 'error') {
+                        stats.errors++;
+                        addResult(result.username, 'errors');
+                    } else if (result.available) {
+                        stats.available++;
+                        addResult(result.username, 'available');
+                    } else {
+                        stats.taken++;
+                        addResult(result.username, 'taken');
+                    }
+                    
+                    updateStats(stats);
+                }
+                
+                if (i + concurrent < usernames.length && !shouldStop) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+
+            return stats;
+        }
+
+        async function startCheck() {
+            const textarea = document.getElementById('usernames');
+            const usernames = textarea.value
+                .split('\n')
+                .map(u => u.trim())
+                .filter(u => u.length > 0);
+
+            if (usernames.length === 0) {
+                alert('Please enter at least one username');
+                return;
+            }
+
+            isChecking = true;
+            shouldStop = false;
+            results = { all: [], available: [], taken: [], errors: [] };
+            
+            document.getElementById('startBtn').classList.add('hidden');
+            document.getElementById('stopBtn').classList.remove('hidden');
+            document.getElementById('stats').classList.remove('hidden');
+            document.getElementById('progressBar').classList.remove('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('resultList').innerHTML = '';
+            
+            const delay = parseInt(document.getElementById('delay').value);
+            const concurrent = parseInt(document.getElementById('concurrent').value);
+
+            await processBatch(usernames, delay, concurrent);
+            
+            document.getElementById('startBtn').classList.remove('hidden');
+            document.getElementById('stopBtn').classList.add('hidden');
+            document.getElementById('exportBtn').classList.remove('hidden');
+            
+            isChecking = false;
+        }
+
+        function stopCheck() {
+            shouldStop = true;
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        function exportResults() {
+            const available = results.available.map(r => r.username).join('\n');
+            const blob = new Blob([available], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `available_usernames_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

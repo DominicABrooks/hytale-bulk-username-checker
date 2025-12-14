@@ -1,0 +1,23 @@
+{
+    "name": "hytale-username-checker",
+    "version": "1.0.0",
+    "description": "Check availability of OG usernames on Hytale",
+    "main": "checker.js",
+    "type": "module",
+    "scripts": {
+        "start": "node checker.js",
+        "check": "node checker.js",
+        "update": "node update_available.js"
+    },
+    "keywords": [
+        "hytale",
+        "username",
+        "checker"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "axios": "^1.6.2",
+        "https-proxy-agent": "^7.0.2"
+    }
+}

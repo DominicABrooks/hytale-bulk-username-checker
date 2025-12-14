@@ -1,0 +1,21 @@
+# Proxy List - One proxy per line
+# Format: http://host:port or http://username:password@host:port
+# You can also use https:// or socks5:// protocols
+
+# Example proxies (replace with your actual proxies):
+# http://proxy1.example.com:8080
+# http://user:pass@proxy2.example.com:3128
+# socks5://proxy3.example.com:1080
+
+# Free proxy services (quality varies):
+# - https://www.proxy-list.download/
+# - https://free-proxy-list.net/
+# - https://www.sslproxies.org/
+
+# Paid proxy services (recommended for reliability):
+# - Bright Data (formerly Luminati)
+# - Smartproxy
+# - Oxylabs
+# - IPRoyal
+
+# Add your proxies below:
